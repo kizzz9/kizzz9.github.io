@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["HW2CCZ5MF6.com.kizzz9.MoodVault"],
+        "components": [
+          { "/": "/runback-support/s/*", "comment": "Runback: shared sets" },
+          { "/": "/runback-support/s", "comment": "Runback: shared sets" }
+        ]
+      }
+    ]
+  }
+}
