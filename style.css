@@ -279,7 +279,7 @@ a { color: inherit; }
 .row .meta { color: var(--muted); opacity: 1; }
 .row .cta { --fg: var(--ink); --bg: var(--paper); margin-top: 20px; }
 
-.media { width: 230px; }
+.media { width: 230px; margin: 0; }
 .media video, .media img.shot {
   width: 100%;
   border-radius: 26px;

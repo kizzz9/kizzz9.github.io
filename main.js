@@ -200,7 +200,7 @@
       const visible = r.bottom > 0 && r.top < vh;
 
       // 画面から完全に外れたら次の出番を予約し、戻ってきたときに主役を入れ替える
-      if (!visible) { st.armed = st.seen && st.g.apps.length > 1; continue; }
+      if (!visible) { st.armed = st.seen && st.g.apps.length > 1; st.flood.style.visibility = "hidden"; continue; }
       st.seen = true;
       if (st.armed) {
         st.armed = false;
@@ -214,6 +214,8 @@
 
       const f = easeInOut(range(p, -0.28, 0.2));
       st.flood.style.clipPath = reduced ? "none" : `circle(${(f * 150).toFixed(2)}% at 78% 50%)`;
+      // 色がまだ広がっていない間は隠す (iOS Safari が下端のツールバーにこの色を拾うため)
+      st.flood.style.visibility = reduced || f > 0.001 ? "" : "hidden";
 
       const wx = (0.35 - range(p, -0.6, 1.05) * 1.1) * vw;
       st.words.forEach((w) => (w.style.transform = `translate3d(${wx.toFixed(1)}px,0,0)`));

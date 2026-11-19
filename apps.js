@@ -10,7 +10,7 @@
  *      書かなければ、動画は縦長、画面写真は横長として扱う
  *   4. スクショは assets/shots/ に置いて shots に並べる (動画の下に横並びで出る。タップで拡大)
  *   5. サポートページがあれば support に URL を書く
- *   6. motif はトップ右に出る図形 (tree / moon / mountain / record / paw / circle)。
+ *   6. motif はトップ右に出る図形 (tree / moon / mountain / record / paw / egg / plane / note / circle)。
  *      新しい形は bg.js の MOTIFS に足す
  *
  * 新しいプラットフォーム (Windows、Steam など) を増やすときは SECTIONS に 1 行足す。

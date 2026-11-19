@@ -17,7 +17,32 @@
   const len = Math.hypot;
   const circle = (x, y, cx, cy, r) => len(x - cx, y - cy) - r;
   const smin = (a, b, k) => { const h = Math.max(k - Math.abs(a - b), 0) / k; return Math.min(a, b) - h * h * k * 0.25; };
+  const seg = (x, y, ax, ay, bx, by, r) => { // 線分のまわりの丸い棒
+    const px = x - ax, py = y - ay, dx = bx - ax, dy = by - ay;
+    const h = Math.max(0, Math.min(1, (px * dx + py * dy) / (dx * dx + dy * dy)));
+    return len(px - dx * h, py - dy * h) - r;
+  };
   const box = (x, y, cx, cy, hx, hy) => { const qx = Math.abs(x - cx) - hx, qy = Math.abs(y - cy) - hy; return len(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0); };
+  // ドット絵 (# が塗り) を距離関数にする。横幅がだいたい 2.2 になる大きさ
+  // gap を付けると、マスの間にすき間が空いて方眼のように見える
+  const pixels = (rows, gap = 0) => {
+    const R = rows.length, C = rows[0].length, c = 2.2 / C;
+    const on = (i, j) => j >= 0 && j < R && i >= 0 && i < C && rows[j][i] === "#";
+    return (x, y) => {
+      const fi = (x + (C * c) / 2) / c, fj = ((R * c) / 2 - y) / c;
+      const i = Math.floor(fi), j = Math.floor(fj);
+      const ui = fi - i, uj = fj - j, g = gap / 2;
+      if (on(i, j) && ui >= g && ui <= 1 - g && uj >= g && uj <= 1 - g) return -0.03; // マスが半透明にならないように一定の値
+      if (on(i, j)) return 0.03;
+      let best = 9;
+      for (let dj = -4; dj <= 4; dj++) for (let di = -4; di <= 4; di++) {
+        if (!on(i + di, j + dj)) continue;
+        const dx = Math.max(i + di - fi, 0, fi - (i + di + 1)), dy = Math.max(j + dj - fj, 0, fj - (j + dj + 1));
+        best = Math.min(best, len(dx, dy) * c);
+      }
+      return Math.max(best, 0.03);
+    };
+  };
   const MOTIFS = {
     circle: (x, y) => circle(x, y, 0, 0, 1),
     // 木: 丸い茂みと幹
@@ -44,6 +69,48 @@
     },
     // レコード盤 (真ん中に穴)
     record: (x, y) => Math.abs(len(x, y) - 0.6) - 0.4,
+    // ヒビの入ったタマゴ (Strimo): ドット絵
+    egg: pixels([
+      "......####......",
+      ".....######.....",
+      "....########....",
+      "...##########...",
+      "..############..",
+      "..############..",
+      ".##############.",
+      ".#..####..#####.",
+      "..##.##.##.#####",
+      "#####..#########",
+      "################",
+      "################",
+      "################",
+      "################",
+      ".##############.",
+      ".##############.",
+      "..############..",
+      "...##########...",
+      ".....######.....",
+    ]),
+    // 音符 (ののーと): ののぐらむの方眼で描く
+    note: pixels([
+      "...#########",
+      "...#########",
+      "...#.......#",
+      "...#.......#",
+      "...#.......#",
+      "...#.......#",
+      ".###.....###",
+      "####....####",
+      "####....####",
+      ".##......##.",
+    ], 0.14),
+    // 飛行機 (上から見たプロペラ機)
+    plane: (x, y) => {
+      let d = seg(x, y, 0, -0.95, 0, 0.8, 0.2); // 胴体
+      d = smin(d, seg(x, y, -1.05, 0.2, 1.05, 0.2, 0.2), 0.12); // 主翼
+      d = smin(d, seg(x, y, -0.45, -0.82, 0.45, -0.82, 0.12), 0.1); // 尾翼
+      return Math.min(d, seg(x, y, -0.42, 1.0, 0.42, 1.0, 0.07)); // プロペラ
+    },
     // 肉球
     paw: (x, y) => {
       const pad = len(x / 1.15, (y + 0.38) / 0.9) * 0.9 - 0.5;
