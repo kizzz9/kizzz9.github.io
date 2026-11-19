@@ -4,6 +4,8 @@
 
 ## アプリを足す
 
+ストアに公開済みなら `python3 tools/add_app.py --appstore <id> --slug <名前>` (Roblox は `--roblox <place id>`) で、アイコン・スクショの取得と `apps.js` への下書きまでできる。説明文などは書き直す。手で足すなら次のとおり。
+
 1. アイコン (正方形、512px くらい) を `assets/icons/` に置く
 2. `apps.js` の `APPS` に 1 件足す。書き方はファイル先頭のコメントと既存の項目を参照
 3. 動画があれば mp4 を `assets/videos/` に置いて `video` に書く。縦型のプレビューは次のコマンドで 1〜2MB に縮む
