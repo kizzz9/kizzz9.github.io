@@ -8,10 +8,11 @@
  *      動画が無ければ画面写真を assets/posters/ に置いて poster に書く。
  *      mediaShape で縦長 "tall" (iPhone の画面) か横長 "wide" (Mac・ゲーム) を選ぶ。
  *      書かなければ、動画は縦長、画面写真は横長として扱う
- *   4. スクショは assets/shots/ に置いて shots に並べる (動画の下に横並びで出る。タップで拡大)
+ *   4. スクショは assets/shots/ に置いて shots に並べる (説明文の下に横並びで出る。タップで拡大)
  *   5. サポートページがあれば support に URL を書く
  *   6. motif はトップ右に出る図形 (tree / moon / mountain / record / paw / egg / plane / note / circle)。
  *      新しい形は bg.js の MOTIFS に足す
+ *   7. en に英語版の文言を書く (sub / desc / genre など。書かなかった項目は日本語のまま出る)
  *
  * 新しいプラットフォーム (Windows、Steam など) を増やすときは SECTIONS に 1 行足す。
  * アプリが 0 件のプラットフォームはページに出ない。
@@ -19,9 +20,9 @@
  */
 
 window.SECTIONS = [
-  { id: "mac", label: "Mac", title: "Mac のアプリ" },
-  { id: "ios", label: "iOS", title: "iPhone のアプリ" },
-  { id: "roblox", label: "Roblox", title: "Roblox のゲーム" },
+  { id: "mac", label: "Mac", title: "Mac のアプリ", en: { title: "Mac apps" } },
+  { id: "ios", label: "iOS", title: "iPhone のアプリ", en: { title: "iPhone apps" } },
+  { id: "roblox", label: "Roblox", title: "Roblox のゲーム", en: { title: "Roblox games" } },
 ];
 
 window.APPS = [
@@ -42,6 +43,12 @@ window.APPS = [
     shots: ["assets/shots/canopy-1.jpg", "assets/shots/canopy-2.jpg", "assets/shots/canopy-3.jpg", "assets/shots/canopy-4.jpg", "assets/shots/canopy-5.jpg", "assets/shots/canopy-6.jpg", "assets/shots/canopy-7.jpg"],
     support: "https://kizzz9.github.io/canopy-support/",
     motif: "tree",
+    en: {
+      sub: "SwiftUI Inspector",
+      desc: "Your AI-written SwiftUI builds and runs, but is it healthy inside? Open a project folder and Canopy shows every View as a tree. Node counts, nesting depth and @State counts tell you which View to fix first. It is read-only and never touches your code, so it can stay open next to Xcode.",
+      genre: "Developer Tools",
+      support: "https://kizzz9.github.io/canopy-support/en/",
+    },
     color: { bg: "#123d29", ink: "#e6f3ea", pop: "#7cc79c" },
   },
   {
@@ -61,6 +68,13 @@ window.APPS = [
     shots: ["assets/shots/debufftimer-1.jpg", "assets/shots/debufftimer-2.jpg", "assets/shots/debufftimer-3.jpg", "assets/shots/debufftimer-4.jpg", "assets/shots/debufftimer-5.jpg", "assets/shots/debufftimer-6.jpg", "assets/shots/debufftimer-7.jpg"],
     support: "https://kizzz9.github.io/debufftimer-support/",
     motif: "moon",
+    en: {
+      name: "DebuffTimer",
+      sub: "Sleep by Fear",
+      desc: "Shows how long you have been awake through Yoi, your brain's avatar. The longer you stay up, the more Yoi turns yellow, then red, and finally cracks. After 17 hours awake, your judgment drops to about the level of being tipsy. DebuffTimer shows that risk as a look, not a number, and gives you a reason to sleep earlier tonight.",
+      genre: "Health & Fitness",
+      support: "https://kizzz9.github.io/debufftimer-support/en/",
+    },
     color: { bg: "#e5322d", ink: "#140606", pop: "#140606" },
   },
   {
@@ -79,6 +93,12 @@ window.APPS = [
     shots: ["assets/shots/tabilm-1.jpg", "assets/shots/tabilm-2.jpg", "assets/shots/tabilm-3.jpg", "assets/shots/tabilm-4.jpg", "assets/shots/tabilm-5.jpg", "assets/shots/tabilm-6.jpg", "assets/shots/tabilm-7.jpg", "assets/shots/tabilm-8.jpg", "assets/shots/tabilm-9.jpg"],
     support: "https://kizzz9.github.io/tabilm-support/",
     motif: "mountain",
+    en: {
+      sub: "Trip Plans & Auto Vlog",
+      desc: "Plan your trip, shoot two seconds at each stop, and your travel Vlog is done. \"Make It for Me\" stitches the clips together to music and finishes a vertical Vlog. Your itinerary, map, weather and packing list live in the same app.",
+      genre: "Travel",
+      support: "https://kizzz9.github.io/tabilm-support/en/",
+    },
     color: { bg: "#f39a4a", ink: "#2a160a", pop: "#fff3df" },
   },
   {
@@ -97,6 +117,12 @@ window.APPS = [
     shots: ["assets/shots/runback-1.jpg", "assets/shots/runback-2.jpg", "assets/shots/runback-3.jpg", "assets/shots/runback-4.jpg", "assets/shots/runback-5.jpg", "assets/shots/runback-6.jpg"],
     support: "https://kizzz9.github.io/runback-support/",
     motif: "record",
+    en: {
+      sub: "Song Sets",
+      desc: "A small companion that sits next to Apple Music. When Autoplay (∞) serves a run of songs you love, save those 2 to 10 tracks in order as a set. Later, one tap and Music plays them again in the same order. For the late-night run of songs that never needed a playlist.",
+      genre: "Music",
+      support: "https://kizzz9.github.io/runback-support/en/",
+    },
     color: { bg: "#14072b", ink: "#f4ecff", pop: "#ff3fae" },
   },
   {
@@ -113,6 +139,11 @@ window.APPS = [
     poster: "assets/posters/pet-heist.jpg",
     shots: ["assets/shots/pet-heist-2.jpg", "assets/shots/pet-heist-3.jpg"],
     motif: "paw",
+    en: {
+      sub: "Steal the best pets",
+      desc: "Hatch eggs, collect pets and grow your own plot in this tycoon. Raising them is only half the game: sneak into other players' plots and steal their strongest pet.",
+      genre: "Tycoon",
+    },
     color: { bg: "#ffd23f", ink: "#2b1a10", pop: "#2b1a10" },
   },
 ];
