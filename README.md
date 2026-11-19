@@ -16,6 +16,7 @@ ffmpeg -ss 3 -i assets/videos/名前.mp4 -frames:v 1 -q:v 4 assets/posters/名�
 4. スクショは `assets/shots/` に置いて `shots` に並べる (説明文の下に横並びで出る)
 5. サポートページがあれば `support` に URL を書く
 6. `motif` でトップ右に出る図形を選ぶ (tree / moon / mountain / record / paw / egg / plane / note / circle)。新しい形は `bg.js` の `MOTIFS` に足す
+7. `en` に英語版の文言を書く。ブラウザの言語が日本語以外なら英語で出る (右上の JA / EN で切り替え、`?lang=en` でも見られる)
 
 プラットフォームを増やすときは `SECTIONS` に 1 行足す。アプリが 0 件のプラットフォームは表示されない。
 

@@ -405,3 +405,6 @@ a { color: inherit; }
   .sign.is-drawn, .sign.is-drawn .glyphs { animation: none; }
   .flood { clip-path: none; transition: none; }
 }
+
+/* 言語の切り替え */
+.bar-nav .lang { padding-left: 22px; border-left: 1px solid currentColor; opacity: .55; }

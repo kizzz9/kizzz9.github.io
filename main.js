@@ -1,8 +1,55 @@
 (() => {
   "use strict";
 
-  const SECTIONS = window.SECTIONS || [];
-  const APPS = window.APPS || [];
+  /* ---------- 言語: ?lang= > 前回選んだもの > ブラウザの言語 (日本語以外は英語) ---------- */
+  const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* 保存できなくても表示は続ける */ } } };
+  const asked = new URLSearchParams(location.search).get("lang");
+  const lang = ["ja", "en"].includes(asked) ? asked
+    : store.get("lang") || ((navigator.languages || [navigator.language]).some((l) => /^ja\b/i.test(l || "")) ? "ja" : "en");
+  const EN = lang === "en";
+  const T = EN ? {
+    count: (n) => `${n} ${n === 1 ? "title" : "titles"}`,
+    since: (y) => `Since ${y}`,
+    view: (s) => `View on ${s}`,
+    store: "the store",
+    support: "Support",
+    tapPause: "Tap to pause",
+    watch: "Watch the video",
+    video: (n) => `${n} video`,
+    screens: (n) => `${n} screenshots`,
+    screen: (n, i) => `Enlarge ${n} screenshot ${i}`,
+    shot: (n) => `${n} screenshot`,
+    other: "JA", otherLang: "ja",
+  } : {
+    count: (n) => `${n} 本`,
+    since: (y) => `${y} 年から`,
+    view: (s) => `${s}で見る`,
+    store: "ストア",
+    support: "サポート",
+    tapPause: "タップで一時停止",
+    watch: "動画を見る",
+    video: (n) => `${n} の動画`,
+    screens: (n) => `${n} の画面`,
+    screen: (n, i) => `${n} の画面 ${i} を拡大`,
+    shot: (n) => `${n} の画面`,
+    other: "EN", otherLang: "en",
+  };
+  const tr = (o) => (EN && o.en ? { ...o, ...o.en } : o);
+  document.documentElement.lang = lang;
+  if (EN) {
+    const set = (sel, attr, v) => { const n = document.querySelector(sel); if (n) n.setAttribute(attr, v); };
+    set(".bar-home", "aria-label", "kizzz9, back to top");
+    set("#nav", "aria-label", "Platforms");
+    set("#shelf", "aria-label", "Apps and games");
+    set("#lightbox", "aria-label", "Enlarged screenshot");
+    set(".lb-prev", "aria-label", "Previous");
+    set(".lb-next", "aria-label", "Next");
+    set(".lb-close", "aria-label", "Close");
+    set('meta[name="description"]', "content", "Mac and iPhone apps and Roblox games by kizzz9.");
+  }
+
+  const SECTIONS = (window.SECTIONS || []).map(tr);
+  const APPS = (window.APPS || []).map(tr);
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -16,15 +63,15 @@
   const icon = (a, alt = "") => `<img class="icon ${a.iconShape === "free" ? "free" : "ios"}" src="${esc(a.icon)}" alt="${esc(alt)}" loading="lazy" decoding="async">`;
   const isFile = (v) => /\.(mp4|webm|mov)(\?|$)/i.test(v || "");
   const meta = (a) => {
-    const items = [a.store, a.genre, a.year && `${a.year} 年から`].filter(Boolean);
+    const items = [a.store, a.genre, a.year && T.since(a.year)].filter(Boolean);
     return items.length ? `<ul class="meta">${items.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>` : "";
   };
-  const cta = (a) => `<a class="cta" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.store || "ストア")}で見る${external}</a>`;
+  const cta = (a) => `<a class="cta" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(T.view(a.store || T.store))}${external}</a>`;
 
   // スクショの横並び。タップで拡大
   const shots = (a) => (a.shots && a.shots.length
-    ? `<ul class="shots${a.mediaShape === "wide" || a.platform !== "ios" ? " wide" : ""}" aria-label="${esc(a.name)} の画面">${a.shots.map((s, i) =>
-      `<li><button type="button" data-shot="${esc(s)}" aria-label="${esc(a.name)} の画面 ${i + 1} を拡大"><img src="${esc(s)}" alt="" loading="lazy" decoding="async"></button></li>`).join("")}</ul>`
+    ? `<ul class="shots${a.mediaShape === "wide" || a.platform !== "ios" ? " wide" : ""}" aria-label="${esc(T.screens(a.name))}">${a.shots.map((s, i) =>
+      `<li><button type="button" data-shot="${esc(s)}" aria-label="${esc(T.screen(a.name, i + 1))}"><img src="${esc(s)}" alt="" loading="lazy" decoding="async"></button></li>`).join("")}</ul>`
     : "");
 
   /* ---------- signature ---------- */
@@ -100,7 +147,9 @@
   document.getElementById("index").innerHTML = groups
     .map((g) => `<a href="#${esc(g.id)}">${esc(g.label)}<small>${g.apps.length}</small></a>`)
     .join("");
-  document.getElementById("nav").innerHTML = groups.map((g) => `<a href="#${esc(g.id)}">${esc(g.label)}</a>`).join("");
+  document.getElementById("nav").innerHTML = groups.map((g) => `<a href="#${esc(g.id)}">${esc(g.label)}</a>`).join("")
+    + `<a class="lang" href="?lang=${T.otherLang}" hreflang="${T.otherLang}" lang="${T.otherLang}">${T.other}</a>`;
+  document.querySelector("#nav .lang").addEventListener("click", () => store.set("lang", T.otherLang));
 
   /* ---------- platforms ---------- */
   const root = document.getElementById("platforms");
@@ -122,7 +171,7 @@
           </div>
         </div>
         <div class="list">
-          <div class="list-head"><h2>${esc(g.title)}</h2><span>${g.apps.length} 本</span></div>
+          <div class="list-head"><h2>${esc(g.title)}</h2><span>${esc(T.count(g.apps.length))}</span></div>
         </div>
       </section>`);
     root.append(sec);
@@ -133,11 +182,11 @@
       let media = "";
       const shape = (a.mediaShape || (isFile(a.video) ? "tall" : "wide")) === "wide" ? " wide" : "";
       if (isFile(a.video)) {
-        media = `<figure class="media${shape}"><video src="${esc(a.video)}" ${a.poster ? `poster="${esc(a.poster)}"` : ""} muted loop playsinline preload="none" aria-label="${esc(a.name)} の動画"></video><figcaption>タップで一時停止</figcaption></figure>`;
+        media = `<figure class="media${shape}"><video src="${esc(a.video)}" ${a.poster ? `poster="${esc(a.poster)}"` : ""} muted loop playsinline preload="none" aria-label="${esc(T.video(a.name))}"></video><figcaption>${esc(T.tapPause)}</figcaption></figure>`;
       } else if (a.video) {
-        media = `<figure class="media${shape}">${a.poster ? `<img class="shot" src="${esc(a.poster)}" alt="" loading="lazy">` : ""}<figcaption><a href="${esc(a.video)}" target="_blank" rel="noopener">動画を見る</a></figcaption></figure>`;
+        media = `<figure class="media${shape}">${a.poster ? `<img class="shot" src="${esc(a.poster)}" alt="" loading="lazy">` : ""}<figcaption><a href="${esc(a.video)}" target="_blank" rel="noopener">${esc(T.watch)}</a></figcaption></figure>`;
       } else if (a.poster) {
-        media = `<figure class="media${shape}"><img class="shot" src="${esc(a.poster)}" alt="${esc(a.name)} の画面" loading="lazy"></figure>`;
+        media = `<figure class="media${shape}"><img class="shot" src="${esc(a.poster)}" alt="${esc(T.shot(a.name))}" loading="lazy"></figure>`;
       }
       list.append(el(`
         <article class="row" id="app-${n}">
@@ -147,7 +196,7 @@
             ${a.sub ? `<p class="hero-sub">${esc(a.sub)}</p>` : ""}
             <p class="hero-desc">${esc(a.desc)}</p>
             ${meta(a)}
-            <div class="row-links">${cta(a)}${a.support ? `<a class="support" href="${esc(a.support)}" target="_blank" rel="noopener">サポート</a>` : ""}</div>
+            <div class="row-links">${cta(a)}${a.support ? `<a class="support" href="${esc(a.support)}" target="_blank" rel="noopener">${esc(T.support)}</a>` : ""}</div>
             ${shots(a)}
           </div>
           ${media}
@@ -268,7 +317,7 @@
 
     // ヘッダーの現在地
     const mid = vh * 0.5;
-    document.querySelectorAll(".bar-nav a").forEach((a) => {
+    document.querySelectorAll(".bar-nav a[href^=\"#\"]").forEach((a) => {
       const s = document.getElementById(a.getAttribute("href").slice(1));
       const r = s.getBoundingClientRect();
       a.classList.toggle("is-on", r.top < mid && r.bottom > mid);
