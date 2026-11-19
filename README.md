@@ -18,6 +18,8 @@ ffmpeg -ss 3 -i assets/videos/名前.mp4 -frames:v 1 -q:v 4 assets/posters/名�
 6. `motif` でトップ右に出る図形を選ぶ (tree / moon / mountain / record / paw / egg / plane / note / circle)。新しい形は `bg.js` の `MOTIFS` に足す
 7. `en` に英語版の文言を書く。ブラウザの言語が日本語以外なら英語で出る (右上の JA / EN で切り替え、`?lang=en` でも見られる)
 
+8. `./tools/og.sh` を実行して、シェア用の画像 `assets/og.png` を作り直す (アイコンが並ぶ。Chrome が要る)
+
 プラットフォームを増やすときは `SECTIONS` に 1 行足す。アプリが 0 件のプラットフォームは表示されない。
 
 ## 手元で見る
