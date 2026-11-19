@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- シェア用の画像 (assets/og.png) の元。apps.js のアイコンを並べる。tools/og.sh で書き出す -->
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&display=block" rel="stylesheet">
+<style>
+html, body { margin: 0; width: 1200px; height: 630px; background: #e6e9ec; color: #15181c; font-family: Unbounded, sans-serif; overflow: hidden; }
+.w { position: absolute; left: 72px; top: 64px; font-size: 240px; font-weight: 400; letter-spacing: -0.045em; line-height: .9; }
+.w span { display: inline-block; }
+.w .z1 { transform: translate(.02em, -.05em); } .w .z2 { transform: translate(.055em, -.135em); } .w .z3 { transform: translate(.09em, -.22em); }
+.l { position: absolute; left: 80px; top: 328px; font-size: 38px; font-weight: 300; letter-spacing: -0.01em; }
+.u { position: absolute; right: 72px; top: 342px; font-size: 20px; font-weight: 600; color: #5b6168; }
+.icons { position: absolute; left: 80px; right: 72px; bottom: 56px; display: flex; gap: var(--gap); align-items: flex-end; }
+.icons img { width: var(--s); height: var(--s); object-fit: cover; transform: rotate(var(--r)); }
+.icons img.ios { border-radius: 22.4%; box-shadow: 0 10px 22px rgba(0, 0, 0, .14); }
+.icons img.free { filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .18)); }
+</style></head><body>
+<div class="w">ki<span class="z1">z</span><span class="z2">z</span><span class="z3">z</span>9</div>
+<div class="l">Apps &amp; Games</div>
+<div class="u">kizzz9.github.io</div>
+<div class="icons" id="icons"></div>
+<script src="../apps.js"></script>
+<script>
+  // 本数に合わせてアイコンの大きさを決める (多いほど小さく)
+  const apps = window.APPS || [], n = apps.length, width = 1200 - 80 - 72;
+  const s = Math.min(150, (width - (n - 1) * 24) / Math.max(n, 1));
+  const box = document.getElementById("icons");
+  box.style.setProperty("--s", s + "px");
+  box.style.setProperty("--gap", Math.round(s * 0.18) + "px");
+  apps.forEach((a, i) => {
+    const img = new Image();
+    img.src = "../" + a.icon;
+    img.className = a.iconShape === "free" ? "free" : "ios";
+    img.style.setProperty("--r", (((i * 37) % 11) - 5) + "deg");
+    box.append(img);
+  });
+</script>
+</body></html>
