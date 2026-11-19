@@ -1,11 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="0; url=https://kizzz9.github.io/runback-support/">
-<link rel="canonical" href="https://kizzz9.github.io/runback-support/">
-<title>Runback</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kizzz9 Apps</title>
+<meta name="description" content="kizzz9 が公開している Mac・iPhone のアプリと Roblox のゲーム。">
+<meta property="og:title" content="kizzz9 Apps">
+<meta property="og:description" content="kizzz9 が公開している Mac・iPhone のアプリと Roblox のゲーム。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kizzz9.github.io/">
+<meta name="theme-color" content="#e6e9ec">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-<body><a href="https://kizzz9.github.io/runback-support/">Runback サポート</a></body>
+<body>
+<header class="bar">
+  <a class="bar-home" href="#top" aria-label="kizzz9 トップへ"><span id="barMark" aria-hidden="true">kizzz9</span></a>
+  <nav class="bar-nav" id="nav" aria-label="プラットフォーム"></nav>
+</header>
+
+<main id="top">
+  <section class="intro">
+    <h1 class="intro-name" id="wordmark" aria-label="kizzz9">kizzz9</h1>
+    <p class="intro-lead">Apps &amp; Games</p>
+    <ul class="intro-shelf" id="shelf" aria-label="アプリとゲームの一覧"></ul>
+    <p class="intro-index" id="index"></p>
+    <canvas class="topo" id="topo" aria-hidden="true"></canvas>
+  </section>
+
+  <div id="platforms"></div>
+</main>
+
+<footer class="foot">
+  <svg class="sign foot-sign" id="footSign" role="img" aria-label="kizzz9"></svg>
+  <div class="foot-meta">
+    <p><a href="https://github.com/kizzz9">GitHub</a></p>
+    <p>© 2026 kizzz9</p>
+  </div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="画面の拡大">
+  <img alt="">
+  <button type="button" class="lb-prev" aria-label="前の画面">‹</button>
+  <button type="button" class="lb-next" aria-label="次の画面">›</button>
+  <button type="button" class="lb-close" aria-label="閉じる">×</button>
+</dialog>
+
+<script src="apps.js"></script>
+<script src="signature.js"></script>
+<script src="main.js"></script>
+<script src="bg.js"></script>
+</body>
 </html>
