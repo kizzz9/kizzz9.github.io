@@ -84,6 +84,8 @@ a { color: inherit; }
   letter-spacing: -0.01em;
 }
 .intro-name .ch { display: inline-block; overflow: clip; padding: .06em 0 .1em; margin: -.06em 0 -.1em; vertical-align: top; }
+/* z は右上へ昇るので、上と右の見切りを広げる (下は登場のときに文字を隠すので広げない) */
+.intro-name .ch.z { padding: .34em .16em .1em 0; margin: -.34em -.16em -.1em 0; }
 .intro-name .ch > span { display: inline-block; transform: translateY(110%); }
 .intro-name.is-in .ch > span { transform: none; transition: transform 1s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i) * 70ms); }
 .intro-name.is-in .ch.z > span > span { display: inline-block; transform-origin: 50% 90%; animation: snooze 3.2s cubic-bezier(.45, 0, .3, 1) infinite; animation-delay: calc(1.4s + var(--j) * 160ms); }
