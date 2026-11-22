@@ -360,7 +360,9 @@ a { color: inherit; }
   .intro { min-height: 0; padding-top: 104px; grid-template-rows: auto; }
   .intro-name { font-size: 25vw; }
   .intro-shelf { gap: 3vw; flex-wrap: nowrap; padding: 40px 0 36px; }
-  .intro-shelf a { width: 15vw; }
+  /* icons shrink to fit one row however many apps there are (6 x 15vw + gaps ran 37px off a 390px phone) */
+  .intro-shelf li { flex: 0 1 15vw; min-width: 0; }
+  .intro-shelf a { width: 100%; }
   .hero-icon {
     left: 50%;
     top: 13vh;
