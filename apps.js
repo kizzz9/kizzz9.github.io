@@ -183,7 +183,7 @@ window.APPS = [
     year: 2026,
     video: "assets/videos/strimo-ja.mp4",
     poster: "assets/posters/strimo.jpg",
-    shots: ["assets/shots/strimo-1.jpg", "assets/shots/strimo-2.jpg", "assets/shots/strimo-3.jpg", "assets/shots/strimo-4.jpg", "assets/shots/strimo-5.jpg", "assets/shots/strimo-6.jpg", "assets/shots/strimo-7.jpg"],
+    shots: ["assets/shots/strimo-1.jpg", "assets/shots/strimo-2.jpg", "assets/shots/strimo-3.jpg", "assets/shots/strimo-4.jpg", "assets/shots/strimo-5.jpg", "assets/shots/strimo-6.jpg", "assets/shots/strimo-7.jpg", "assets/shots/strimo-8.jpg"],
     mediaShape: "tall",
     motif: "egg",
     support: "https://kizzz9.github.io/strimo-support/",
